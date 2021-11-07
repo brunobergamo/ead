@@ -60,8 +60,21 @@ public class CourseModel implements Serializable {
     @Fetch(FetchMode.SUBSELECT)
     private Set<ModuleModel> modules;
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "course")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Fetch(FetchMode.JOIN)
+    private Set<CourseUserModel> courseUserModels;
+
     public UUID getCourseId() {
         return courseId;
+    }
+
+    public Set<CourseUserModel> getCourseUserModels() {
+        return courseUserModels;
+    }
+
+    public void setCourseUserModels(Set<CourseUserModel> courseUserModels) {
+        this.courseUserModels = courseUserModels;
     }
 
     public void setCourseId(UUID courseId) {
@@ -138,5 +151,9 @@ public class CourseModel implements Serializable {
 
     public void setModules(Set<ModuleModel> modules) {
         this.modules = modules;
+    }
+
+    public CourseUserModel convertToCourseUserModel(UUID userId){
+        return new CourseUserModel(this,userId);
     }
 }

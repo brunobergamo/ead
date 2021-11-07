@@ -4,6 +4,7 @@ import com.ead.authuser.models.UserModel;
 import com.ead.authuser.specification.SpecificationTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -23,5 +24,5 @@ public interface UserService {
 
     boolean existsByEmail(String email);
 
-    Page<UserModel> findAll(Pageable pageable, SpecificationTemplate.UserSpec spec);
+    Page<UserModel> findAll(Pageable pageable, Specification spec);
 }
