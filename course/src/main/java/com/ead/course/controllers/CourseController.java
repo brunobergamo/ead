@@ -4,6 +4,7 @@ import com.ead.course.dtos.CourseDTO;
 import com.ead.course.models.CourseModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.speficication.SpecificationTemplate;
+import com.ead.course.validation.CourseValidator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.GeneratedValue;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,9 +33,16 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
-    @PostMapping
-    public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseDTO courseDto){
+    @Autowired
+    CourseValidator courseValidator;
 
+    @PostMapping
+    public ResponseEntity<Object> saveCourse(@RequestBody CourseDTO courseDto, Errors error){
+
+        courseValidator.validate(courseDto,error);
+        if(error.hasErrors()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error.getAllErrors());
+        }
         log.debug("POST saveCourse courseDto received {} ", courseDto.toString());
         LocalDateTime utf = LocalDateTime.now(ZoneId.of("UTC"));
 
