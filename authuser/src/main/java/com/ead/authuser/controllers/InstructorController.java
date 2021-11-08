@@ -20,7 +20,7 @@ import java.util.Optional;
 @Log4j2
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/instructor")
+@RequestMapping("/instructors")
 public class InstructorController {
 
     @Autowired
@@ -39,8 +39,5 @@ public class InstructorController {
         userModel.setLastUpdateDate(now);
         userService.save(userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(userModel);
-
-
-
     }
 }
