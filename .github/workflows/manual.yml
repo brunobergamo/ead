@@ -36,5 +36,5 @@ jobs:
           file: ./authuser/Dockerfile
           push: true
           tags: |
-            brunobergamo/rotten-potatoes:latest
-            brunobergamo/rotten-potatoes:v${{ github.run_number }}
+            brunobergamo/authuser:latest
+            brunobergamo/authuser:v${{ github.run_number }}
