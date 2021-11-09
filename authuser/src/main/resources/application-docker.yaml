@@ -30,4 +30,4 @@ logging:
 ead:
   api:
     url:
-      course: 'http://localhost:8082'
+      course: 'http://host.docker.internal:8082'
