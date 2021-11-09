@@ -26,6 +26,7 @@ jobs:
           distribution: 'adopt'
           cache: maven
           context: ./authuser
+          path: ./authuser
       - name: Build with Maven
         run: mvn -B package
   # This workflow contains a single job called "build"
